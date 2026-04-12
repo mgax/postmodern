@@ -11,7 +11,7 @@ fi
 
 if [ -e ~/.zshrc ]; then
   if [ -e ~/.postmodern-next-zshrc ]; then
-    echo "Error: ~/.postmodern-next-zshrc already exists, aborting" >&2
+    echo "😱 ~/.postmodern-next-zshrc already exists, aborting" >&2
     exit 1
   fi
   mv ~/.zshrc ~/.postmodern-next-zshrc
