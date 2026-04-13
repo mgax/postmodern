@@ -32,6 +32,13 @@ def main():
         backup=home / ".postmodern-next-zshrc",
     )
 
+    (home / ".config").mkdir(exist_ok=True)
+    link_with_backup(
+        src=SCRIPT_DIR / "nvim",
+        dest=home / ".config" / "nvim",
+        backup=None,
+    )
+
 
 if __name__ == "__main__":
     main()
