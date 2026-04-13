@@ -12,5 +12,5 @@ Portable environment configuration. Shell rc files, vim config, and cross-platfo
 
 ```sh
 git clone <repo-url> ~/postmodern
-~/postmodern/install.sh
+~/postmodern/install.py
 ```
