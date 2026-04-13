@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import os
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,6 +32,15 @@ def main():
         dest=home / ".zshrc",
         backup=home / ".postmodern-next-zshrc",
     )
+
+    # Install ty (Python type checker / LSP)
+    if shutil.which("ty"):
+        print("ty is already installed")
+    elif shutil.which("uv"):
+        print("Installing ty...")
+        subprocess.run(["uv", "tool", "install", "ty"], check=True)
+    else:
+        print("⚠️  uv not found, skipping ty install (install manually: uv tool install ty)")
 
     (home / ".config").mkdir(exist_ok=True)
     link_with_backup(

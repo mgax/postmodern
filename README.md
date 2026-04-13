@@ -1,6 +1,6 @@
 # postmodern 🪩
 
-Portable environment configuration. Shell rc files, vim config, and cross-platform scripts to install dependencies like jq and docker.
+Portable environment configuration. Shell rc files, neovim config, and cross-platform scripts to install dependencies like jq and docker.
 
 ## Goals
 
