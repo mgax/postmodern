@@ -20,6 +20,16 @@ require('lazy').setup('plugins')
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
+-- Neovide keymaps
+if vim.g.neovide then
+  vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y')
+  vim.keymap.set({ 'n', 'v', 'i' }, '<D-v>', function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end)
+  vim.keymap.set({ 'n', 'i' }, '<D-s>', '<cmd>w<cr>')
+  vim.keymap.set({ 'n', 'i' }, '<D-w>', '<cmd>q<cr>')
+  vim.keymap.set({ 'n', 'i' }, '<D-{>', '<cmd>tabprev<cr>')
+  vim.keymap.set({ 'n', 'i' }, '<D-}>', '<cmd>tabnext<cr>')
+end
+
 -- Splash branding
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
