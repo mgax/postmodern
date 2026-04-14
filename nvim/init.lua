@@ -25,8 +25,8 @@ vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
 -- General keymaps
 vim.keymap.set('n', '<leader>zl', '<cmd>set cursorline!<cr>')
-vim.keymap.set('n', '<leader>cte', ':tabe ./')
 vim.keymap.set('n', '<leader>ce', ':e <C-R>=expand("%:h") . "/" <CR>')
+vim.keymap.set('n', '<leader>cte', ':tabe <C-R>=expand("%:h") . "/" <CR>')
 vim.keymap.set('n', '<leader>vl', '$BvE')
 vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end)
 vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end)
@@ -35,6 +35,7 @@ vim.keymap.set('n', '<C-S-j>', ':move +1<CR>')
 vim.keymap.set('x', '<C-S-k>', ":move '<-2<CR>gv")
 vim.keymap.set('x', '<C-S-j>', ":move '>+1<CR>gv")
 vim.keymap.set('n', '<leader>tm', ':tabmove ')
+vim.keymap.set('n', '<leader>td', ':tab split<CR>')
 vim.keymap.set('n', '?', ':nohlsearch<CR>')
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
