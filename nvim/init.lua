@@ -20,6 +20,25 @@ require('lazy').setup('plugins')
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
+-- General keymaps
+vim.keymap.set('n', '<leader>zl', '<cmd>set cursorline!<cr>')
+vim.keymap.set('n', '<leader>cte', ':tabe ./')
+vim.keymap.set('n', '<leader>vl', '$BvE')
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<C-S-k>', ':move -2<CR>')
+vim.keymap.set('n', '<C-S-j>', ':move +1<CR>')
+vim.keymap.set('x', '<C-S-k>', ":move '<-2<CR>gv")
+vim.keymap.set('x', '<C-S-j>', ":move '>+1<CR>gv")
+
+-- Python keymaps
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.keymap.set('n', '<leader>b', 'obreakpoint()<esc>', { buffer = true })
+  end,
+})
+
 -- Neovide keymaps
 if vim.g.neovide then
   vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y')
@@ -28,6 +47,7 @@ if vim.g.neovide then
   vim.keymap.set({ 'n', 'i' }, '<D-w>', '<cmd>q<cr>')
   vim.keymap.set({ 'n', 'i' }, '<D-{>', '<cmd>tabprev<cr>')
   vim.keymap.set({ 'n', 'i' }, '<D-}>', '<cmd>tabnext<cr>')
+  vim.keymap.set('n', '<D-t>', '<cmd>tabnew<cr>')
 end
 
 -- Splash branding
