@@ -24,12 +24,13 @@ vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 vim.keymap.set('n', '<leader>zl', '<cmd>set cursorline!<cr>')
 vim.keymap.set('n', '<leader>cte', ':tabe ./')
 vim.keymap.set('n', '<leader>vl', '$BvE')
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end)
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end)
 vim.keymap.set('n', '<C-S-k>', ':move -2<CR>')
 vim.keymap.set('n', '<C-S-j>', ':move +1<CR>')
 vim.keymap.set('x', '<C-S-k>', ":move '<-2<CR>gv")
 vim.keymap.set('x', '<C-S-j>', ":move '>+1<CR>gv")
+vim.keymap.set('n', '<leader>tm', ':tabmove ')
 
 -- Python keymaps
 vim.api.nvim_create_autocmd('FileType', {
