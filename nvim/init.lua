@@ -50,6 +50,9 @@ vim.keymap.set('n', '<leader>te', ':tabe ')
 vim.keymap.set('n', '?', ':nohlsearch<CR>')
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
+-- Recurring tasks
+vim.keymap.set('n', '<leader>r', require('recur').recur)
+
 -- Python keymaps
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'python',
