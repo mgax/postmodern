@@ -1,6 +1,9 @@
 keybind = shift+enter=text:\x1b\r
 
 window-inherit-working-directory = false
+window-inherit-font-size = false
+window-width = 100
+window-height = 30
 tab-inherit-working-directory = true
 term=xterm-256color
 notify-on-command-finish = unfocused
