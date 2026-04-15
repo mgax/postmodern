@@ -1,4 +1,10 @@
 keybind = shift+enter=text:\x1b\r
+keybind = super+s=text:\x1bs
+keybind = super+w=text:\x1bw
+keybind = super+slash=text:\x1b/
+keybind = super+alt+t=text:\x1bt
+keybind = super+alt+shift+left_bracket=text:\x1b{
+keybind = super+alt+shift+right_bracket=text:\x1b}
 
 window-inherit-working-directory = false
 window-inherit-font-size = false

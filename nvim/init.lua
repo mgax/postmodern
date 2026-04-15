@@ -24,6 +24,15 @@ require('lazy').setup('plugins')
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
+-- Terminal Cmd-key keymaps (via ghostty escape sequences)
+vim.keymap.set({ 'n', 'i' }, '<M-s>', '<cmd>w<cr>')
+vim.keymap.set({ 'n', 'i' }, '<M-w>', '<cmd>q<cr>')
+vim.keymap.set('n', '<M-/>', 'gcc', { remap = true })
+vim.keymap.set('v', '<M-/>', 'gc', { remap = true })
+vim.keymap.set({ 'n', 'i' }, '<M-{>', '<cmd>tabprev<cr>')
+vim.keymap.set({ 'n', 'i' }, '<M-}>', '<cmd>tabnext<cr>')
+vim.keymap.set('n', '<M-t>', '<cmd>tabnew<cr>')
+
 -- General keymaps
 vim.keymap.set('n', '<leader>zl', '<cmd>set cursorline!<cr>')
 vim.keymap.set('n', '<leader>ce', ':e <C-R>=expand("%:h") . "/" <CR>')
