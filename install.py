@@ -24,6 +24,27 @@ def link_with_backup(src, dest, backup):
     print(f"Symlinked {dest} -> {src}")
 
 
+MANAGERS = {
+    'brew': lambda pkg: subprocess.run(["brew", "install", pkg], check=True),
+    'uv': lambda pkg: subprocess.run(["uv", "tool", "install", pkg], check=True),
+}
+
+
+def install(cmd, **managers):
+    if shutil.which(cmd):
+        print(f"{cmd} is already installed")
+        return
+
+    for name, pkg in managers.items():
+        if shutil.which(name):
+            print(f"Installing {cmd} via {name}...")
+            MANAGERS[name](pkg)
+            return
+
+    print(f"😱 no package manager found to install {cmd}", file=sys.stderr)
+    sys.exit(1)
+
+
 def main():
     home = Path.home()
 
@@ -33,14 +54,8 @@ def main():
         backup=home / ".postmodern-next-zshrc",
     )
 
-    # Install ty (Python type checker / LSP)
-    if shutil.which("ty"):
-        print("ty is already installed")
-    elif shutil.which("uv"):
-        print("Installing ty...")
-        subprocess.run(["uv", "tool", "install", "ty"], check=True)
-    else:
-        print("⚠️  uv not found, skipping ty install (install manually: uv tool install ty)")
+    install(cmd="tree-sitter", brew="tree-sitter")
+    install(cmd="ty", uv="ty")
 
     (home / ".config").mkdir(exist_ok=True)
     link_with_backup(
