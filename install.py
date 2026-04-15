@@ -48,6 +48,11 @@ def main():
         dest=home / ".config" / "nvim",
         backup=None,
     )
+    link_with_backup(
+        src=SCRIPT_DIR / "ghostty",
+        dest=home / ".config" / "ghostty",
+        backup=None,
+    )
 
 
 if __name__ == "__main__":
