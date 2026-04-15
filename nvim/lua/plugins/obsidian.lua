@@ -7,5 +7,6 @@ return {
     workspaces = {
       { name = 'obsidian', path = '~/obsidian' },
     },
+    ui = { enable = false },
   },
 }
