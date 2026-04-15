@@ -54,7 +54,7 @@ def main():
         backup=home / ".postmodern-next-zshrc",
     )
 
-    install(cmd="tree-sitter", brew="tree-sitter")
+    install(cmd="tree-sitter", brew="tree-sitter-cli")
     install(cmd="ty", uv="ty")
 
     (home / ".config").mkdir(exist_ok=True)
