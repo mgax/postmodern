@@ -1,14 +1,12 @@
 # postmodern 🪩
 
-Portable environment configuration. Shell rc files, neovim config, and cross-platform scripts to install dependencies like jq and docker.
+Portable, minimal dev environment across macOS and Linux. Vibe-coded one piece at a time.
 
-## Goals
+- **zsh** — shell config, chained with existing `.zshrc`
+- **neovim** — LSP, treesitter, catppuccin, obsidian ([details](nvim/README.md))
+- **ghostty** — terminal config with keybinds forwarded to nvim
 
-- Reproducible dev environment across macOS and Linux
-- Minimal, incremental setup — only install what's needed
-- Vibe-coded one piece at a time
-
-## Usage
+## Setup
 
 ```sh
 git clone <repo-url> ~/postmodern
