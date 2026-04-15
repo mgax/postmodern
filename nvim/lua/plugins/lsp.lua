@@ -18,15 +18,7 @@ return {
     },
     config = function(_, opts)
       require('mason-lspconfig').setup(opts)
-
-      local lspconfig = require('lspconfig')
-
-      -- Mason-managed servers
-      lspconfig.ts_ls.setup({})
-      lspconfig.rust_analyzer.setup({})
-      lspconfig.ruff.setup({})
-
-      vim.lsp.enable('ty')
+      vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'ruff', 'ty' })
     end,
   },
 }
