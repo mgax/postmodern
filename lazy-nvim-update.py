@@ -13,6 +13,12 @@ def run(*args):
 
 
 def main():
+    print("Updating lazy.nvim plugins...")
+    subprocess.run(
+        ["nvim", "--headless", "+Lazy! update", "+qa"],
+        check=True, stdout=subprocess.DEVNULL,
+    )
+
     result = subprocess.run(
         ["git", "diff", "--quiet", LOCKFILE],
         cwd=SCRIPT_DIR,
