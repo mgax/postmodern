@@ -9,7 +9,7 @@ Portable, minimal dev environment across macOS and Linux. Vibe-coded one piece a
 ## Setup
 
 ```sh
-git clone <repo-url> ~/postmodern
+git clone https://github.com/mgax/postmodern ~/postmodern
 uv tool install -e ~/postmodern
 postmodern install
 postmodern upgrade  # run regularly
