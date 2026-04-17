@@ -1,3 +1,4 @@
+keybind = super+c=copy_to_clipboard
 keybind = shift+enter=text:\x1b\r
 keybind = super+s=text:\x1bs
 keybind = super+w=text:\x1bw
