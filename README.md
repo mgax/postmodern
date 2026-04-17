@@ -10,5 +10,7 @@ Portable, minimal dev environment across macOS and Linux. Vibe-coded one piece a
 
 ```sh
 git clone <repo-url> ~/postmodern
-~/postmodern/install.py
+uv tool install -e ~/postmodern
+postmodern install
+postmodern upgrade  # run regularly
 ```

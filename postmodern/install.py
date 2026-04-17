@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
-
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+from postmodern import REPO_DIR
 
 
 def link_with_backup(src, dest, backup):
@@ -25,8 +22,8 @@ def link_with_backup(src, dest, backup):
 
 
 MANAGERS = {
-    'brew': lambda pkg: subprocess.run(["brew", "install", pkg], check=True),
-    'uv': lambda pkg: subprocess.run(["uv", "tool", "install", pkg], check=True),
+    "brew": lambda pkg: subprocess.run(["brew", "install", pkg], check=True),
+    "uv": lambda pkg: subprocess.run(["uv", "tool", "install", pkg], check=True),
 }
 
 
@@ -49,7 +46,7 @@ def main():
     home = Path.home()
 
     link_with_backup(
-        src=SCRIPT_DIR / ".zshrc",
+        src=REPO_DIR / ".zshrc",
         dest=home / ".zshrc",
         backup=home / ".postmodern-next-zshrc",
     )
@@ -59,16 +56,12 @@ def main():
 
     (home / ".config").mkdir(exist_ok=True)
     link_with_backup(
-        src=SCRIPT_DIR / "nvim",
+        src=REPO_DIR / "nvim",
         dest=home / ".config" / "nvim",
         backup=None,
     )
     link_with_backup(
-        src=SCRIPT_DIR / "ghostty",
+        src=REPO_DIR / "ghostty",
         dest=home / ".config" / "ghostty",
         backup=None,
     )
-
-
-if __name__ == "__main__":
-    main()
