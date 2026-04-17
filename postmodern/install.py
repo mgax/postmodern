@@ -1,19 +1,20 @@
-import shutil
-import subprocess
-import sys
+import logging
+from pathlib import Path
 
 from postmodern import REPO_DIR
+from postmodern.package_managers import available_package_managers
+
+logger = logging.getLogger(__name__)
 
 
 def link_with_backup(src, dest, backup):
+    print(f"Link {dest} -> {src}")
     if dest.is_symlink() and dest.resolve() == src.resolve():
-        print(f"{dest} is already symlinked to postmodern")
         return
 
     if dest.exists() or dest.is_symlink():
         if backup is None or backup.exists() or backup.is_symlink():
-            print(f"😱 {dest} already exists, aborting", file=sys.stderr)
-            sys.exit(1)
+            raise RuntimeError(f"{dest} already exists, aborting 😱")
         dest.rename(backup)
         print(f"Moved existing {dest} to {backup}")
 
@@ -21,25 +22,14 @@ def link_with_backup(src, dest, backup):
     print(f"Symlinked {dest} -> {src}")
 
 
-MANAGERS = {
-    "brew": lambda pkg: subprocess.run(["brew", "install", pkg], check=True),
-    "uv": lambda pkg: subprocess.run(["uv", "tool", "install", pkg], check=True),
-}
-
-
-def install(cmd, **managers):
-    if shutil.which(cmd):
-        print(f"{cmd} is already installed")
-        return
-
-    for name, pkg in managers.items():
-        if shutil.which(name):
-            print(f"Installing {cmd} via {name}...")
-            MANAGERS[name](pkg)
+def install(**package_names):
+    managers = available_package_managers()
+    for manager_name, package in package_names.items():
+        if manager_name in managers:
+            managers[manager_name].install(package)
             return
 
-    print(f"😱 no package manager found to install {cmd}", file=sys.stderr)
-    sys.exit(1)
+    raise RuntimeError(f"no package manager found to install {package_names} 😱")
 
 
 def main():
@@ -51,8 +41,8 @@ def main():
         backup=home / ".postmodern-next-zshrc",
     )
 
-    install(cmd="tree-sitter", brew="tree-sitter-cli")
-    install(cmd="ty", uv="ty")
+    install(brew="tree-sitter-cli")
+    install(uv="ty")
 
     (home / ".config").mkdir(exist_ok=True)
     link_with_backup(

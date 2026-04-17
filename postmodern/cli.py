@@ -1,5 +1,4 @@
 import argparse
-import sys
 
 from postmodern.install import main as install
 from postmodern.upgrade import main as upgrade
