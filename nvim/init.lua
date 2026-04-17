@@ -54,6 +54,22 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- Recurring tasks
 vim.keymap.set('n', '<leader>r', require('recur').recur)
 
+-- Markdown checklist styling
+vim.api.nvim_set_hl(0, 'CheckboxDone', { strikethrough = false, fg = '#6c7086' })
+vim.api.nvim_set_hl(0, 'CheckboxCancelled', { strikethrough = true, fg = '#6c7086' })
+vim.api.nvim_set_hl(0, 'CheckboxImportant', { fg = '#ed8796' })
+vim.api.nvim_set_hl(0, 'CheckboxDeferred', { fg = '#6c7086' })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.fn.matchadd('CheckboxDone', '- \\[x\\]\\s*\\zs.*')
+    vim.fn.matchadd('CheckboxCancelled', '- \\[\\~\\]\\s*\\zs.*')
+    vim.fn.matchadd('CheckboxImportant', '- \\[!\\]')
+    vim.fn.matchadd('CheckboxDeferred', '- \\[>\\]\\s*\\zs.*')
+  end,
+})
+
 -- Python keymaps
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'python',
