@@ -69,3 +69,18 @@ ALL = [Brew, Apt, Uv]
 
 def available_package_managers():
     return {manager.command: manager for cls in ALL if (manager := cls.get())}
+
+
+def install_package(**package_names):
+    managers = available_package_managers()
+    for manager_name, package in package_names.items():
+        if manager_name in managers:
+            managers[manager_name].install(package)
+            return
+
+    raise RuntimeError(f"no package manager found to install {package_names} 😱")
+
+
+def upgrade_packages():
+    for mgr in available_package_managers().values():
+        mgr.upgrade()

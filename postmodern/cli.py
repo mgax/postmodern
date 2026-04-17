@@ -1,7 +1,13 @@
 import argparse
 
-from postmodern.install import main as install
-from postmodern.upgrade import main as upgrade
+from postmodern.install import install
+from postmodern.lazy_nvim_update import lazy_nvim_update
+from postmodern.package_managers import upgrade_packages
+
+
+def upgrade():
+    upgrade_packages()
+    lazy_nvim_update()
 
 
 def main():
