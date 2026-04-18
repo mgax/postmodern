@@ -7,6 +7,7 @@ vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.swapfile = false
 vim.opt.clipboard = 'unnamedplus'
+vim.opt.cursorline = true
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
