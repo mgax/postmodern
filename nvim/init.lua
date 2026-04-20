@@ -50,6 +50,8 @@ vim.keymap.set('n', '<leader>tm', ':tabmove ')
 vim.keymap.set('n', '<leader>td', ':tab split<CR>')
 vim.keymap.set('n', '<leader>te', ':tabe ')
 vim.keymap.set('n', '?', ':nohlsearch<CR>')
+vim.keymap.set('i', '<F1>', function() return os.date('%Y-%m-%d') end, { expr = true })
+vim.keymap.set('i', '<F2>', function() return os.date('%H:%M') end, { expr = true })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
 -- Recurring tasks
