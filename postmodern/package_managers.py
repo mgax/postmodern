@@ -76,6 +76,9 @@ def available_package_managers():
 def install_package(**package_names):
     managers = available_package_managers()
     for manager_name, package in package_names.items():
+        if callable(package):
+            package()
+            return
         if manager_name in managers:
             managers[manager_name].install(package)
             return

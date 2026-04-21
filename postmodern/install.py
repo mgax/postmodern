@@ -1,10 +1,15 @@
 import logging
+import subprocess
 from pathlib import Path
 
 from postmodern import REPO_DIR
 from postmodern.package_managers import install_package
 
 logger = logging.getLogger(__name__)
+
+
+def rustup():
+    subprocess.run("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y", shell=True, check=True)
 
 
 def symlink(src, dest, move_to_next=None):
@@ -25,8 +30,8 @@ def symlink(src, dest, move_to_next=None):
 def install():
     home = Path.home()
 
-    # Cargo (needed for tree-sitter-cli on Linux)
-    install_package(brew="rust", apt="cargo")
+    # Rust toolchain
+    install_package(brew="rust", apt=rustup)
 
     # Treesitter CLI
     install_package(brew="tree-sitter-cli", cargo="tree-sitter-cli")
