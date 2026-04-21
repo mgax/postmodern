@@ -31,11 +31,16 @@ def install():
     # `ty` type checker
     install_package(uv="ty")
 
-    # ZSH
+    # Shell
     symlink(
         src=REPO_DIR / ".zshrc",
         dest=home / ".zshrc",
         move_to_next=home / ".postmodern-next-zshrc",
+    )
+    symlink(
+        src=REPO_DIR / ".bashrc",
+        dest=home / ".bashrc",
+        move_to_next=home / ".postmodern-next-bashrc",
     )
 
     # NeoVIM
