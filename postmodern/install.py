@@ -1,4 +1,6 @@
 import logging
+import platform
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -8,14 +10,17 @@ from postmodern.package_managers import install_package
 logger = logging.getLogger(__name__)
 
 
-def rustup(apt):
-    apt.install("build-essential")
-    apt.install("libclang-dev")
-    subprocess.run(
-        "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
-        shell=True,
-        check=True,
-    )
+def install_tree_sitter_cli(_apt):
+    dest = Path.home() / ".local" / "bin" / "tree-sitter"
+    if dest.exists():
+        return
+    arch = platform.machine()
+    arch_map = {"x86_64": "x64", "aarch64": "arm64"}
+    suffix = f"linux-{arch_map.get(arch, arch)}"
+    url = f"https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-{suffix}.gz"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(f"curl -sSL {url} | gunzip > {dest} && chmod +x {dest}", shell=True, check=True)
+    print(f"Installed tree-sitter to {dest}")
 
 
 def symlink(src, dest, move_to_next=None):
@@ -36,11 +41,8 @@ def symlink(src, dest, move_to_next=None):
 def install():
     home = Path.home()
 
-    # Rust toolchain
-    install_package(brew="rust", apt=rustup)
-
     # Treesitter CLI
-    install_package(brew="tree-sitter-cli", cargo="tree-sitter-cli")
+    install_package(brew="tree-sitter-cli", apt=install_tree_sitter_cli)
 
     # `ty` type checker
     install_package(uv="ty")
