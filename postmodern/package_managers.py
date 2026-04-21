@@ -45,16 +45,6 @@ class Apt(PackageManager):
         self.run("sudo", "apt-get", "upgrade", "-y")
 
 
-class Cargo(PackageManager):
-    name = "cargo"
-
-    def install(self, pkg):
-        self.run("cargo", "install", pkg)
-
-    def upgrade(self):
-        self.run("cargo", "install-update", "--all")
-
-
 class Uv(PackageManager):
     name = "uv"
 
@@ -66,7 +56,7 @@ class Uv(PackageManager):
         self.run("uv", "tool", "upgrade", "--all", "--exclude-newer", cutoff)
 
 
-ALL = [Brew, Apt, Cargo, Uv]
+ALL = [Brew, Apt, Uv]
 
 
 def available_package_managers():
