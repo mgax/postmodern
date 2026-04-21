@@ -9,7 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 def rustup():
-    subprocess.run("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y", shell=True, check=True)
+    subprocess.run(
+        "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
+        shell=True,
+        check=True,
+    )
 
 
 def symlink(src, dest, move_to_next=None):
