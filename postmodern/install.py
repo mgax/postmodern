@@ -8,7 +8,8 @@ from postmodern.package_managers import install_package
 logger = logging.getLogger(__name__)
 
 
-def rustup():
+def rustup(apt):
+    apt.install("build-essential")
     subprocess.run(
         "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
         shell=True,
