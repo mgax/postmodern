@@ -25,8 +25,11 @@ def symlink(src, dest, move_to_next=None):
 def install():
     home = Path.home()
 
+    # Cargo (needed for tree-sitter-cli on Linux)
+    install_package(brew="rust", apt="cargo")
+
     # Treesitter CLI
-    install_package(brew="tree-sitter-cli")
+    install_package(brew="tree-sitter-cli", cargo="tree-sitter-cli")
 
     # `ty` type checker
     install_package(uv="ty")
