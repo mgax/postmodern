@@ -4,21 +4,10 @@ from datetime import date, timedelta
 
 
 class PackageManager:
-    class NotAvailable(Exception):
-        pass
+    name = None
 
-    command = None
-
-    def __init__(self):
-        if not shutil.which(self.command):
-            raise self.NotAvailable(self.command)
-
-    @classmethod
-    def get(cls):
-        try:
-            return cls()
-        except cls.NotAvailable:
-            return None
+    def is_available(self):
+        return shutil.which(self.name) is not None
 
     def run(self, *args):
         print(f"$ {' '.join(args)}")
@@ -32,7 +21,7 @@ class PackageManager:
 
 
 class Brew(PackageManager):
-    command = "brew"
+    name = "brew"
 
     def install(self, pkg):
         self.run("brew", "install", "--quiet", pkg)
@@ -43,7 +32,10 @@ class Brew(PackageManager):
 
 
 class Apt(PackageManager):
-    command = "apt-get"
+    name = "apt"
+
+    def is_available(self):
+        return shutil.which("apt-get") is not None
 
     def install(self, pkg):
         self.run("sudo", "apt-get", "install", "-y", pkg)
@@ -54,7 +46,7 @@ class Apt(PackageManager):
 
 
 class Cargo(PackageManager):
-    command = "cargo"
+    name = "cargo"
 
     def install(self, pkg):
         self.run("cargo", "install", pkg)
@@ -64,7 +56,7 @@ class Cargo(PackageManager):
 
 
 class Uv(PackageManager):
-    command = "uv"
+    name = "uv"
 
     def install(self, pkg):
         self.run("uv", "tool", "install", pkg)
@@ -78,7 +70,7 @@ ALL = [Brew, Apt, Cargo, Uv]
 
 
 def available_package_managers():
-    return {manager.command: manager for cls in ALL if (manager := cls.get())}
+    return {mgr.name: mgr for cls in ALL if (mgr := cls()).is_available()}
 
 
 def install_package(**package_names):
