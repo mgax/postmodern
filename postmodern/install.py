@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 
 from postmodern import REPO_DIR
-from postmodern.package_managers import install_package
+from postmodern.package_managers import ALREADY_INSTALLED, install_package
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +57,9 @@ def symlink(src, dest, move_to_next=None):
 
 def install():
     home = Path.home()
+
+    # Build tools (needed for treesitter parser compilation)
+    install_package(brew=ALREADY_INSTALLED, apt="build-essential")
 
     # Neovim
     install_package(brew="neovim", apt=install_neovim)

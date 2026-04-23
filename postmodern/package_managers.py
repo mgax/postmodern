@@ -58,6 +58,8 @@ class Uv(PackageManager):
 
 ALL = [Brew, Apt, Uv]
 
+ALREADY_INSTALLED = object()
+
 
 def available_package_managers():
     return {mgr.name: mgr for cls in ALL if (mgr := cls()).is_available()}
@@ -66,6 +68,8 @@ def available_package_managers():
 def install_package(**package_names):
     managers = available_package_managers()
     for manager_name, package in package_names.items():
+        if package is ALREADY_INSTALLED:
+            return
         if callable(package):
             package(managers.get(manager_name))
             return
