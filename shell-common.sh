@@ -1,12 +1,21 @@
-# docker aliases
-alias d='docker'
-alias dc='docker compose'
-alias dce='docker compose exec'
-alias dcps='docker compose ps --format="table {{.Name}}\t{{.Status}}\t{{.Ports}}"'
-alias dcstop='dc stop --timeout=1'
-alias dcup='docker compose up --detach --timeout=1'
-alias dgc='docker system prune -a --force --filter=until=720h'
-alias dps='docker ps --format="table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+# container aliases
+if command -v docker &>/dev/null; then
+  alias d='docker'
+  alias dc='docker compose'
+  alias dce='docker compose exec'
+  alias dcps='docker compose ps --format="table {{.Name}}\t{{.Status}}\t{{.Ports}}"'
+  alias dcstop='dc stop --timeout=1'
+  alias dcup='docker compose up --detach --timeout=1'
+  alias dgc='docker system prune -a --force --filter=until=720h'
+  alias dps='docker ps --format="table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+elif command -v container &>/dev/null; then
+  alias d='container'
+  alias dc='container-compose'
+  alias dce='container-compose exec'
+  alias dcstop='container-compose down'
+  alias dcup='container-compose up --detach --timeout=1'
+  alias dps='container list'
+fi
 
 # git aliases
 alias ga='git add --all'
