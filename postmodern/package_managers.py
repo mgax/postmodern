@@ -68,13 +68,13 @@ def available_package_managers():
 def install_package(**package_names):
     managers = available_package_managers()
     for manager_name, package in package_names.items():
-        if package is ALREADY_INSTALLED:
-            return
-        if callable(package):
-            package(managers.get(manager_name))
-            return
-        if manager_name in managers:
-            managers[manager_name].install(package)
+        if manager := managers.get(manager_name):
+            if package is ALREADY_INSTALLED:
+                return
+            if callable(package):
+                package(manager)
+                return
+            manager.install(package)
             return
 
     raise RuntimeError(f"no package manager found to install {package_names} 😱")
