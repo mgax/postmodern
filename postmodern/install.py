@@ -88,3 +88,10 @@ def install():
 
     # Ghostty
     symlink(src=REPO_DIR / "ghostty", dest=home / ".config" / "ghostty")
+
+
+def install_containers():
+    install_package(brew="container", apt="docker.io")
+    install_package(brew=ALREADY_INSTALLED, apt="docker-cli")
+    install_package(brew=ALREADY_INSTALLED, apt="docker-buildx")
+    install_package(brew="container-compose", apt="docker-compose")
