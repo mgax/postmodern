@@ -14,6 +14,8 @@ def install_neovim(_apt):
     if dest.exists():
         return
     arch = platform.machine()
+    arch_map = {"aarch64": "arm64"}
+    arch = arch_map.get(arch, arch)
     url = f"https://github.com/neovim/neovim/releases/latest/download/nvim-linux-{arch}.tar.gz"
     local = Path.home() / ".local"
     local.mkdir(parents=True, exist_ok=True)
