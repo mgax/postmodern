@@ -13,7 +13,7 @@ elif command -v container &>/dev/null; then
   alias dc='container-compose'
   alias dce='container-compose exec'
   alias dcstop='container-compose down'
-  alias dcup='container-compose up --detach --timeout=1'
+  alias dcup='container-compose up --detach'
   alias dps='container list'
 fi
 
