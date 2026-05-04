@@ -6,7 +6,6 @@ vim.g.maplocalleader = ' '
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.swapfile = false
-vim.opt.clipboard = 'unnamedplus'
 vim.opt.cursorline = true
 
 -- Bootstrap lazy.nvim
@@ -34,11 +33,10 @@ vim.keymap.set('v', '<M-/>', 'gc', { remap = true })
 vim.keymap.set({ 'n', 'i' }, '<M-{>', '<cmd>tabprev<cr>')
 vim.keymap.set({ 'n', 'i' }, '<M-}>', '<cmd>tabnext<cr>')
 vim.keymap.set('n', '<M-t>', '<cmd>tabnew<cr>')
+vim.keymap.set({ 'n', 'v' }, '<M-c>', '"+y')
+vim.keymap.set({ 'n', 'v', 'i' }, '<M-v>', function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end)
 
 -- General keymaps
-vim.keymap.set({ 'n', 'x' }, 'd', '"_d')
-vim.keymap.set({ 'n', 'x' }, 'x', '"_x')
-vim.keymap.set('x', 'p', '"_dP')
 vim.keymap.set('n', '<leader>zl', '<cmd>set cursorline!<cr>')
 vim.keymap.set('n', '<leader>ce', ':e <C-R>=expand("%:h") . "/" <CR>')
 vim.keymap.set('n', '<leader>cte', ':tabe <C-R>=expand("%:h") . "/" <CR>')
