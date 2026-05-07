@@ -1,6 +1,8 @@
+import json
 import logging
 import platform
 import subprocess
+import urllib.request
 from pathlib import Path
 
 from postmodern import REPO_DIR
@@ -42,6 +44,28 @@ def install_tree_sitter_cli(_apt):
     print(f"Installed tree-sitter to {dest}")
 
 
+def install_delta(_apt):
+    dest = Path.home() / ".local" / "bin" / "delta"
+    if dest.exists():
+        return
+    arch = platform.machine()
+    with urllib.request.urlopen(
+        "https://api.github.com/repos/dandavison/delta/releases/latest"
+    ) as resp:
+        version = json.load(resp)["tag_name"]
+    url = (
+        f"https://github.com/dandavison/delta/releases/download/{version}"
+        f"/delta-{version}-{arch}-unknown-linux-gnu.tar.gz"
+    )
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        f"curl -sSL {url} | tar xz -C {dest.parent} --strip-components=1 '*/delta'",
+        shell=True,
+        check=True,
+    )
+    print(f"Installed delta to {dest}")
+
+
 def ensure_gitconfig_include(src, dest):
     include_line = f"\tpath = {src}\n"
     if dest.exists() and include_line in dest.read_text():
@@ -80,6 +104,9 @@ def install():
 
     # `ty` type checker
     install_package(uv="ty")
+
+    # delta (git diff pager)
+    install_package(brew="git-delta", apt=install_delta)
 
     # Shell
     symlink(
