@@ -1,0 +1,6 @@
+[pretty]
+	postmodern = %C(yellow)%h%C(reset) %C(blue)%an %C(green)%ad%C(red)%d%C(reset)%n  %s
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main

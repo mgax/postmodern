@@ -42,6 +42,15 @@ def install_tree_sitter_cli(_apt):
     print(f"Installed tree-sitter to {dest}")
 
 
+def ensure_gitconfig_include(src, dest):
+    include_line = f"\tpath = {src}\n"
+    if dest.exists() and include_line in dest.read_text():
+        return
+    with dest.open("a") as f:
+        f.write(f"[include]\n{include_line}")
+    print(f"Added include for {src} to {dest}")
+
+
 def symlink(src, dest, move_to_next=None):
     print(f"Link {dest} -> {src}")
     if dest.is_symlink() and dest.resolve() == src.resolve():
@@ -90,6 +99,9 @@ def install():
 
     # Ghostty
     symlink(src=REPO_DIR / "ghostty", dest=home / ".config" / "ghostty")
+
+    # Git
+    ensure_gitconfig_include(src=REPO_DIR / "gitconfig", dest=home / ".gitconfig")
 
 
 def install_containers():
