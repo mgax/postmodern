@@ -76,6 +76,8 @@ alias gt='git stash'
 alias gtp='git stash pop'
 
 # other aliases
+alias diff='colordiff -U3'
+alias ls='eza'
 alias neovide='neovide --fork'
 alias nv='nvim'
 alias py='python3'

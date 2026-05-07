@@ -44,6 +44,21 @@ def install_tree_sitter_cli(_apt):
     print(f"Installed tree-sitter to {dest}")
 
 
+def install_eza(_apt):
+    dest = Path.home() / ".local" / "bin" / "eza"
+    if dest.exists():
+        return
+    arch = platform.machine()
+    url = f"https://github.com/eza-community/eza/releases/latest/download/eza_{arch}-unknown-linux-gnu.tar.gz"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        f"curl -sSL {url} | tar xz -C {dest.parent}",
+        shell=True,
+        check=True,
+    )
+    print(f"Installed eza to {dest}")
+
+
 def install_delta(_apt):
     dest = Path.home() / ".local" / "bin" / "delta"
     if dest.exists():
@@ -107,6 +122,10 @@ def install():
 
     # delta (git diff pager)
     install_package(brew="git-delta", apt=install_delta)
+
+    # eza, colordiff
+    install_package(brew="eza", apt=install_eza)
+    install_package(brew="colordiff", apt="colordiff")
 
     # Shell
     symlink(
