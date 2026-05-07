@@ -1,3 +1,30 @@
+# homebrew (macOS)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# shell-specific integrations
+if [ -n "$ZSH_VERSION" ]; then
+  _pm_shell=zsh
+elif [ -n "$BASH_VERSION" ]; then
+  _pm_shell=bash
+fi
+
+if [ "$_pm_shell" = zsh ]; then
+  autoload -Uz compinit
+  compinit
+fi
+
+if command -v direnv &>/dev/null; then
+  eval "$(direnv hook $_pm_shell)"
+fi
+
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --use-on-cd --shell $_pm_shell)"
+fi
+
+unset _pm_shell
+
 # container aliases
 if command -v docker &>/dev/null; then
   alias d='docker'
