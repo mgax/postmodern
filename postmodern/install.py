@@ -10,75 +10,74 @@ from postmodern.package_managers import ALREADY_INSTALLED, install_package
 
 logger = logging.getLogger(__name__)
 
+ARCH = platform.machine()
 
-def install_neovim(_apt):
-    dest = Path.home() / ".local" / "bin" / "nvim"
+
+def _install_local_bin(name, fetch):
+    dest = Path.home() / ".local" / "bin" / name
     if dest.exists():
         return
-    arch = platform.machine()
-    arch_map = {"aarch64": "arm64"}
-    arch = arch_map.get(arch, arch)
-    url = f"https://github.com/neovim/neovim/releases/latest/download/nvim-linux-{arch}.tar.gz"
-    local = Path.home() / ".local"
-    local.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        f"curl -sSL {url} | tar xz -C {local} --strip-components=1",
-        shell=True,
-        check=True,
-    )
-    print(f"Installed neovim to {dest}")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    fetch(dest)
+    print(f"Installed {name} to {dest}")
+
+
+def install_neovim(_apt):
+    def fetch(dest):
+        arch = {"aarch64": "arm64"}.get(ARCH, ARCH)
+        url = f"https://github.com/neovim/neovim/releases/latest/download/nvim-linux-{arch}.tar.gz"
+        local = dest.parent.parent
+        subprocess.run(
+            f"curl -sSL {url} | tar xz -C {local} --strip-components=1",
+            shell=True,
+            check=True,
+        )
+
+    _install_local_bin("nvim", fetch)
 
 
 def install_tree_sitter_cli(_apt):
-    dest = Path.home() / ".local" / "bin" / "tree-sitter"
-    if dest.exists():
-        return
-    arch = platform.machine()
-    arch_map = {"x86_64": "x64", "aarch64": "arm64"}
-    suffix = f"linux-{arch_map.get(arch, arch)}"
-    url = f"https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-{suffix}.gz"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        f"curl -sSL {url} | gunzip > {dest} && chmod +x {dest}", shell=True, check=True
-    )
-    print(f"Installed tree-sitter to {dest}")
+    def fetch(dest):
+        arch = {"x86_64": "x64", "aarch64": "arm64"}.get(ARCH, ARCH)
+        url = f"https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-{arch}.gz"
+        subprocess.run(
+            f"curl -sSL {url} | gunzip > {dest} && chmod +x {dest}",
+            shell=True,
+            check=True,
+        )
+
+    _install_local_bin("tree-sitter", fetch)
 
 
 def install_eza(_apt):
-    dest = Path.home() / ".local" / "bin" / "eza"
-    if dest.exists():
-        return
-    arch = platform.machine()
-    url = f"https://github.com/eza-community/eza/releases/latest/download/eza_{arch}-unknown-linux-gnu.tar.gz"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        f"curl -sSL {url} | tar xz -C {dest.parent}",
-        shell=True,
-        check=True,
-    )
-    print(f"Installed eza to {dest}")
+    def fetch(dest):
+        url = f"https://github.com/eza-community/eza/releases/latest/download/eza_{ARCH}-unknown-linux-gnu.tar.gz"
+        subprocess.run(
+            f"curl -sSL {url} | tar xz -C {dest.parent}",
+            shell=True,
+            check=True,
+        )
+
+    _install_local_bin("eza", fetch)
 
 
 def install_delta(_apt):
-    dest = Path.home() / ".local" / "bin" / "delta"
-    if dest.exists():
-        return
-    arch = platform.machine()
-    with urllib.request.urlopen(
-        "https://api.github.com/repos/dandavison/delta/releases/latest"
-    ) as resp:
-        version = json.load(resp)["tag_name"]
-    url = (
-        f"https://github.com/dandavison/delta/releases/download/{version}"
-        f"/delta-{version}-{arch}-unknown-linux-gnu.tar.gz"
-    )
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        f"curl -sSL {url} | tar xz -C {dest.parent} --strip-components=1 '*/delta'",
-        shell=True,
-        check=True,
-    )
-    print(f"Installed delta to {dest}")
+    def fetch(dest):
+        with urllib.request.urlopen(
+            "https://api.github.com/repos/dandavison/delta/releases/latest"
+        ) as resp:
+            version = json.load(resp)["tag_name"]
+        url = (
+            f"https://github.com/dandavison/delta/releases/download/{version}"
+            f"/delta-{version}-{ARCH}-unknown-linux-gnu.tar.gz"
+        )
+        subprocess.run(
+            f"curl -sSL {url} | tar xz -C {dest.parent} --strip-components=1 '*/delta'",
+            shell=True,
+            check=True,
+        )
+
+    _install_local_bin("delta", fetch)
 
 
 def ensure_gitconfig_include(src, dest):
