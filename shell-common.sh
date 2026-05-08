@@ -25,6 +25,15 @@ fi
 
 unset _pm_shell
 
+# Bring ~/.local/bin to the front of PATH. On macOS, path_helper (run from
+# /etc/zprofile) and brew shellenv each push it further down; on Debian it
+# may not be on PATH at all. Strip any existing entries, then re-prepend.
+PATH=":$PATH:"
+PATH="${PATH//:$HOME\/.local\/bin:/:}"
+PATH="${PATH#:}"
+PATH="${PATH%:}"
+export PATH="$HOME/.local/bin:$PATH"
+
 # container aliases
 if command -v docker &>/dev/null; then
   alias d='docker'
