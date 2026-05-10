@@ -72,7 +72,7 @@ def install_delta(_apt):
             f"/delta-{version}-{ARCH}-unknown-linux-gnu.tar.gz"
         )
         subprocess.run(
-            f"curl -sSL {url} | tar xz -C {dest.parent} --strip-components=1 '*/delta'",
+            f"curl -sSL {url} | tar xz -C {dest.parent} --strip-components=1 --wildcards '*/delta'",
             shell=True,
             check=True,
         )
