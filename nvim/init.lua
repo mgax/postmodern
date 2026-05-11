@@ -81,21 +81,3 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<leader>b', 'obreakpoint()<esc>', { buffer = true })
   end,
 })
-
--- Neovide settings
-if vim.g.neovide then
-  vim.g.neovide_cursor_animation_length = 0.03
-  vim.g.neovide_cursor_trail_size = 0.3
-  vim.g.neovide_scroll_animation_length = 0.2
-
-
-  vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y')
-  vim.keymap.set({ 'n', 'v', 'i' }, '<D-v>', function() vim.api.nvim_paste(vim.fn.getreg('+'), true, -1) end)
-  vim.keymap.set({ 'n', 'i' }, '<D-s>', '<cmd>w<cr>')
-  vim.keymap.set({ 'n', 'i' }, '<D-w>', '<cmd>q<cr>')
-  vim.keymap.set('n', '<D-/>', 'gcc', { remap = true })
-  vim.keymap.set('v', '<D-/>', 'gc', { remap = true })
-  vim.keymap.set({ 'n', 'i' }, '<D-{>', '<cmd>tabprev<cr>')
-  vim.keymap.set({ 'n', 'i' }, '<D-}>', '<cmd>tabnext<cr>')
-  vim.keymap.set('n', '<D-t>', '<cmd>tabnew<cr>')
-end
