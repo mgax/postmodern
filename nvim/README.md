@@ -22,7 +22,10 @@ Neovim configuration managed by postmodern.
 
 ## Prerequisites
 
-- ty: `uv tool install ty` (not managed by mason)
+These are install-on-demand — nvim runs without them and notifies when first needed.
+
+- Treesitter parser compilation: a C compiler (e.g. `apt install build-essential`) and the `tree-sitter` CLI (`cargo install tree-sitter-cli`, or `brew install tree-sitter`).
+- ty (Python LSP): `uv tool install ty` (not managed by mason).
 - All other language servers are installed automatically by mason on first launch.
 
 ## Keybindings

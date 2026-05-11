@@ -12,7 +12,20 @@ return {
     opts = {},
     config = function(_, opts)
       require('mason-lspconfig').setup(opts)
-      vim.lsp.enable('ty')
+      if vim.fn.executable('ty') == 1 then
+        vim.lsp.enable('ty')
+      else
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = 'python',
+          once = true,
+          callback = function()
+            vim.notify(
+              "ty not on PATH; Python LSP disabled. Install with 'uv tool install ty'.",
+              vim.log.levels.INFO
+            )
+          end,
+        })
+      end
     end,
   },
 }

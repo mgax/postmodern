@@ -36,19 +36,6 @@ def install_neovim(_apt):
     _install_local_bin("nvim", fetch)
 
 
-def install_tree_sitter_cli(_apt):
-    def fetch(dest):
-        arch = {"x86_64": "x64", "aarch64": "arm64"}.get(ARCH, ARCH)
-        url = f"https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-{arch}.gz"
-        subprocess.run(
-            f"curl -sSL {url} | gunzip > {dest} && chmod +x {dest}",
-            shell=True,
-            check=True,
-        )
-
-    _install_local_bin("tree-sitter", fetch)
-
-
 def install_eza(_apt):
     def fetch(dest):
         url = f"https://github.com/eza-community/eza/releases/latest/download/eza_{ARCH}-unknown-linux-gnu.tar.gz"
@@ -107,17 +94,8 @@ def symlink(src, dest, move_to_next=None):
 def install():
     home = Path.home()
 
-    # Build tools (needed for treesitter parser compilation)
-    install_package(brew=ALREADY_INSTALLED, apt="build-essential")
-
     # Neovim
     install_package(brew="neovim", apt=install_neovim)
-
-    # Treesitter CLI
-    install_package(brew="tree-sitter-cli", apt=install_tree_sitter_cli)
-
-    # `ty` type checker
-    install_package(uv="ty")
 
     # delta (git diff pager)
     install_package(brew="git-delta", apt=install_delta)
