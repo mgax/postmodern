@@ -31,7 +31,11 @@ return {
         vim.fn.system({ 'open', url })
       end,
       note_id_func = function(title)
-        return title and title:lower():gsub('%s+', '-'):gsub('[^%w%-]', '') or ''
+        if not title or title == '' then return '' end
+        local s = vim.fn.tolower(title)
+        s = vim.fn.substitute(s, '\\s\\+', '-', 'g')
+        s = vim.fn.substitute(s, '[^[:keyword:]-]\\+', '', 'g')
+        return s
       end,
     }
   end,
