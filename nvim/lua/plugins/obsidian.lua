@@ -1,13 +1,15 @@
+local obsidian_dir = vim.fn.expand(vim.env.OBSIDIAN_DIR or '~/obsidian')
+
 return {
   'epwalsh/obsidian.nvim',
   version = '*',
   dependencies = { 'nvim-lua/plenary.nvim' },
   event = (function()
-    local base = vim.fn.expand('~') .. '/obsidian/**.md'
+    local base = obsidian_dir .. '/**.md'
     return { 'BufReadPre ' .. base, 'BufNewFile ' .. base }
   end)(),
   cond = function()
-    return vim.fn.isdirectory(vim.fn.expand('~/obsidian')) == 1
+    return vim.fn.isdirectory(obsidian_dir) == 1
   end,
   opts = function()
     local mappings = require("obsidian.config").MappingOpts.default()
@@ -19,7 +21,7 @@ return {
     }
     return {
       workspaces = {
-        { name = 'obsidian', path = '~/obsidian' },
+        { name = 'obsidian', path = obsidian_dir },
       },
       ui = {
         enable = false,
