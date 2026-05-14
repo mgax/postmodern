@@ -2,7 +2,13 @@ return {
   'epwalsh/obsidian.nvim',
   version = '*',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  ft = 'markdown',
+  event = (function()
+    local base = vim.fn.expand('~') .. '/obsidian/**.md'
+    return { 'BufReadPre ' .. base, 'BufNewFile ' .. base }
+  end)(),
+  cond = function()
+    return vim.fn.isdirectory(vim.fn.expand('~/obsidian')) == 1
+  end,
   opts = function()
     local mappings = require("obsidian.config").MappingOpts.default()
     mappings["<S-CR>"] = {
