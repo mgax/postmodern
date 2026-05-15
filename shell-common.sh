@@ -13,6 +13,10 @@ fi
 if [ "$_pm_shell" = zsh ]; then
   autoload -Uz compinit
   compinit
+  HISTFILE=~/.zsh_history
+  HISTSIZE=10000
+  SAVEHIST=10000
+  setopt share_history
 fi
 
 if command -v direnv &>/dev/null; then
