@@ -105,6 +105,7 @@ def install():
     install_package(brew="colordiff", apt="colordiff")
 
     # Shell
+    install_package(brew="zsh-autosuggestions", apt="zsh-autosuggestions")
     symlink(
         src=REPO_DIR / ".zshrc",
         dest=home / ".zshrc",

@@ -13,10 +13,18 @@ fi
 if [ "$_pm_shell" = zsh ]; then
   autoload -Uz compinit
   compinit
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   HISTFILE=~/.zsh_history
   HISTSIZE=10000
   SAVEHIST=10000
   setopt share_history
+  if [ -n "$HOMEBREW_PREFIX" ]; then
+    _pm_autosugg="$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  else
+    _pm_autosugg="/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  fi
+  [ -f "$_pm_autosugg" ] && source "$_pm_autosugg"
+  unset _pm_autosugg
 fi
 
 if command -v direnv &>/dev/null; then
