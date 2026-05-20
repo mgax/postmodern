@@ -35,8 +35,6 @@ if command -v fnm &>/dev/null; then
   eval "$(fnm env --use-on-cd --shell $_pm_shell)"
 fi
 
-unset _pm_shell
-
 # Bring ~/.local/bin to the front of PATH. On macOS, path_helper (run from
 # /etc/zprofile) and brew shellenv each push it further down; on Debian it
 # may not be on PATH at all. Strip any existing entries, then re-prepend.
@@ -102,3 +100,12 @@ alias ls='eza'
 alias neovide='neovide --fork'
 alias nv='nvim'
 alias py='python3'
+
+# untracked local overrides
+if [ "$_pm_shell" = zsh ]; then
+  _pm_dir="$(dirname "$(readlink -f "${(%):-%N}")")"
+elif [ "$_pm_shell" = bash ]; then
+  _pm_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+fi
+[ -f "$_pm_dir/shell-local.sh" ] && source "$_pm_dir/shell-local.sh"
+unset _pm_dir _pm_shell
