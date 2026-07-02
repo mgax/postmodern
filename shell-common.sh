@@ -68,7 +68,10 @@ alias ga='git add --all'
 alias gb='git branch'
 alias gc='git commit'
 alias gcl='git clone'
-alias gco='git checkout'
+gco() {
+  printf '\e[1;31mgco (git checkout) is deprecated; use gsw (git switch) or grs (git restore)\e[0m\n' >&2
+  git checkout "$@"
+}
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gds='git diff --stat'
@@ -90,7 +93,9 @@ alias grb='git rebase'
 alias grc='git rebase --continue'
 alias grh='git reset --hard'
 alias gri='git rebase --interactive'
+alias grs='git restore'
 alias gs='git status -sb'
+alias gsw='git switch'
 alias gt='git stash'
 alias gtp='git stash pop'
 
