@@ -70,7 +70,7 @@ alias gc='git commit'
 alias gcl='git clone'
 gco() {
   printf '\e[1;31mgco (git checkout) is deprecated; use gsw (git switch) or grs (git restore)\e[0m\n' >&2
-  git checkout "$@"
+  return 1
 }
 alias gd='git diff'
 alias gdc='git diff --cached'
