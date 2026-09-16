@@ -17,7 +17,8 @@ if [ "$_pm_shell" = zsh ]; then
   HISTFILE=~/.zsh_history
   HISTSIZE=10000
   SAVEHIST=10000
-  setopt share_history
+  setopt inc_append_history
+  setopt hist_ignore_space
   if [ -n "$HOMEBREW_PREFIX" ]; then
     _pm_autosugg="$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   else
