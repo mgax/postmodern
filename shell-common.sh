@@ -19,6 +19,11 @@ if [ "$_pm_shell" = zsh ]; then
   SAVEHIST=10000
   setopt inc_append_history
   setopt hist_ignore_space
+  autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+  bindkey '^[[A' up-line-or-beginning-search
+  bindkey '^[[B' down-line-or-beginning-search
   if [ -n "$HOMEBREW_PREFIX" ]; then
     _pm_autosugg="$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   else
