@@ -12,3 +12,5 @@
 	conflictStyle = zdiff3
 [init]
 	defaultBranch = main
+[rebase]
+	autoSquash = true
