@@ -11,6 +11,7 @@ elif [ -n "$BASH_VERSION" ]; then
 fi
 
 if [ "$_pm_shell" = zsh ]; then
+  PS1="%n@%m %1~ %# "
   autoload -Uz compinit
   compinit
   zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
